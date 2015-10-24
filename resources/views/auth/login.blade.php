@@ -22,14 +22,14 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">{{ trans('validation.attributes.email') }}</label>
+							<label class="col-md-4 control-label">email</label>
 							<div class="col-md-6">
 							    <input type="email" name="email" class="form-control">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">{{ trans('validation.attributes.password') }}</label>
+							<label class="col-md-4 control-label">password</label>
 							<div class="col-md-6">
 								<input type="password" name="password" class="form-control">
 							</div>
