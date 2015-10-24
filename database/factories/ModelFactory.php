@@ -36,5 +36,6 @@ $factory->define(App\Client::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => strtolower ($faker->email),
+        'phone' => $faker->phoneNumber
     ];
 });

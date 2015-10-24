@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
+use DB;
 
 class AppController extends Controller
 {
@@ -56,7 +57,13 @@ class AppController extends Controller
 
     public function details($id){
         $app = \App\Aplication::find($id+0);
-        $clients = array();
+
+        $clients = DB::table('clients')
+            ->join('clients_app', 'clients.id', '=', 'clients_app.clients_id')
+            ->select('clients.*')
+            ->where('aplication_id',$id+0)
+            ->get();
+        //$clients = DB::table('clients')->whereIn('id',$list)->get();
 
         return view('app_details')->with(['app' => $app,'clients' => $clients]);
     }
@@ -74,5 +81,13 @@ class AppController extends Controller
         return redirect()->route('apps.details',$app->id);
     }
 
+    public function edit(Request $request){
+
+        $app = \App\Aplication::find($request->input('id')+0);
+        $app->name = $request->input('name');
+        $app->uri = $request->input('url');
+        $app->save();
+        return redirect()->route('apps.details',$app->id);
+    }
 
 }

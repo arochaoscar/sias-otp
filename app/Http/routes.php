@@ -80,9 +80,24 @@ Route::post('apps/add',[
     'as' => 'apps.add',
 ]);
 
+Route::post('apps/edit',[
+    'uses' => 'AppController@edit',
+    'as' => 'apps.edit',
+]);
+
 //* Clientes *//
 Route::get('clients/search/{id}',[
     'uses' => 'ClientController@search',
-    'as' => 'clients.searc',
+    'as' => 'clients.search',
+]);
+
+Route::post('clients/add',[
+    'uses' => 'ClientController@add',
+    'as' => 'clients.add',
+]);
+
+Route::get('clients/del/{client}/{app}',[
+    'uses' => 'ClientController@del',
+    'as' => 'clients.del',
 ]);
 

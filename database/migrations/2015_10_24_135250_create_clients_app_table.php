@@ -19,6 +19,7 @@ class CreateClientsAppTable extends Migration
             $table->integer('aplication_id')->unsigned();
             $table->foreign('aplication_id')->references('id')->on('aplications');
             $table->timestamps();
+            $table->unique(['clients_id','aplication_id']);
         });
     }
 
