@@ -45,11 +45,19 @@ if(session()->has('options')){
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								@foreach( $listOpc as $opcion)
-									<li><a href="{{ route($opcion['route']) }}">{{ $opcion['option'] }}</a></li>
+									<li>
+										<a href="{{ route($opcion['route']) }}">
+											<i class="glyphicon glyphicon-menu-right"></i> {{ $opcion['option'] }}
+										</a>
+									</li>
 								@endforeach
 								<li role="separator" class="divider"></li>
 
-								<li><a href="{{ route('exit') }}">Logout</a></li>
+								<li>
+									<a href="{{ route('exit') }}">
+										<i class="glyphicon glyphicon-off"></i> Logout
+									</a>
+								</li>
 							</ul>
 						</li>
 					@endif

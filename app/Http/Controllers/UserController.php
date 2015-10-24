@@ -27,7 +27,6 @@ class UserController extends Controller
         $user = \App\User::find($id);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        //$user->password = bcrypt('Clave.123');
         //$user->role = 'owner';
         $user->save();
         return redirect()->route('home');

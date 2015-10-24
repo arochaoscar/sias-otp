@@ -70,3 +70,19 @@ Route::get('apps',[
 ]);
 
 
+Route::get('apps/{id}',[
+    'uses' => 'AppController@details',
+    'as' => 'apps.details',
+]);
+
+Route::post('apps/add',[
+    'uses' => 'AppController@add',
+    'as' => 'apps.add',
+]);
+
+//* Clientes *//
+Route::get('clients/search/{id}',[
+    'uses' => 'ClientController@search',
+    'as' => 'clients.searc',
+]);
+

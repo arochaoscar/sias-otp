@@ -27,6 +27,14 @@ $factory->define(App\Aplication::class, function (Faker\Generator $faker) {
         'private_key' => bcrypt(str_random(10)),
         'public_key' => bcrypt(str_random(10)),
         'uri' => $faker->url,
-        'user_id' => rand(2,6)
+        'user_id' => 2
+    ];
+});
+
+
+$factory->define(App\Client::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'email' => strtolower ($faker->email),
     ];
 });

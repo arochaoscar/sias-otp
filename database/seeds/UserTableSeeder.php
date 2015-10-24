@@ -13,15 +13,19 @@ class UserTableSeeder extends Seeder
     {
 
         factory(App\User::class)->create([
-                'name' => 'Oscar Arocha',
-                'email' => 'arocha.oscar@gmail.com',
-                'password' => bcrypt('Ing.S1st01'),
-                'role' => 'root'
+                'name' => 'Administrador Sistema',
+                'email' => 'aplicaciones.sias@gmail.com',
+                'password' => bcrypt('Clave.123'),
+                'role' => 'root',
+                'status' => 'A'
         ]);
 
-        factory(App\User::class,5)->create([
+        factory(App\User::class)->create([
+            'name' => 'Administrador Aplicaiones',
+            'email' => 'rosalessaile@gmail.com',
             'password' => bcrypt('Clave.123'),
-            'role' => 'owner'
+            'role' => 'owner',
+            'status' => 'A'
         ]);
 
 

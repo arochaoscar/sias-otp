@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Aplication;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -43,14 +44,35 @@ class AppController extends Controller
 
     }
 
-
-    public function apps(){
-
-        return view('apps');
-    }
-
     public function logout(){
         \Session::put('options',null);
         return redirect()->route('logout');
     }
+
+    public function apps(){
+        $apps = \App\Aplication::all();
+        return view('apps')->with('apps',$apps);
+    }
+
+    public function details($id){
+        $app = \App\Aplication::find($id+0);
+        $clients = array();
+
+        return view('app_details')->with(['app' => $app,'clients' => $clients]);
+    }
+
+    public function add(Request $request){
+
+        $app = new Aplication();
+        $app->name = $request->input('name');
+        $app->uri = $request->input('url');
+        $app->private_key = bcrypt('PRI'.$request->input('name'));
+        $app->public_key = bcrypt('PUB'.$request->input('name'));
+        $app->user_id = \Auth::user()->id;
+        $app->save();
+
+        return redirect()->route('apps.details',$app->id);
+    }
+
+
 }

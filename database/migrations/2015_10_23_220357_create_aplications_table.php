@@ -18,7 +18,8 @@ class CreateAplicationsTable extends Migration
             $table->string('private_key')->unique();
             $table->string('public_key')->unique();
             $table->string('uri')->unique();
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
