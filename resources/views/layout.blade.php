@@ -1,7 +1,5 @@
 <?php
-
 $listOpc = array();
-
 if(session()->has('options')){
 	$listOpc = \Session::get('options');
 }
@@ -39,20 +37,19 @@ if(session()->has('options')){
 
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
-						<li><a href="/auth/login">Login</a></li>
+						<li><a href="/login">Login</a></li>
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 								{{ Auth::user()->name }} <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="{{ route('home') }}">Home</a></li>
 								@foreach( $listOpc as $opcion)
 									<li><a href="{{ route($opcion['route']) }}">{{ $opcion['option'] }}</a></li>
 								@endforeach
 								<li role="separator" class="divider"></li>
 
-								<li><a href="{{ route('logout') }}">Logout</a></li>
+								<li><a href="{{ route('exit') }}">Logout</a></li>
 							</ul>
 						</li>
 					@endif
