@@ -69,12 +69,13 @@ class AppController extends Controller
     }
 
     public function add(Request $request){
-
+        $list = \App\Aplication::all();
+        $key = str_pad(count($list)+1,5,"0");
         $app = new Aplication();
         $app->name = $request->input('name');
         $app->uri = $request->input('url');
-        $app->private_key = bcrypt('PRI'.$request->input('name'));
-        $app->public_key = bcrypt('PUB'.$request->input('name'));
+        $app->private_key = bcrypt('PRI'.$key);
+        $app->public_key = bcrypt('PUB'.$key);
         $app->user_id = \Auth::user()->id;
         $app->save();
 

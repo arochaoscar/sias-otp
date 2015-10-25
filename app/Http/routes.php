@@ -101,3 +101,10 @@ Route::get('clients/del/{client}/{app}',[
     'as' => 'clients.del',
 ]);
 
+
+/** API OTP **/
+Route::get('api/otp/get/{mail}',[
+    'uses' => 'OtpController@getOTP',
+    'as' => 'api.otp.get',
+]);
+
