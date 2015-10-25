@@ -18,10 +18,8 @@ class ClientController extends Controller
     public function add(Request $request){
         if(!$request->input('user_id')){
             $client = new Client();
-            $id = $client->id;
         }else{
-            $id = $request->input('user_id');
-            $client = \App\Client::find($id+0);
+            $client = \App\Client::find($request->input('user_id')+0);
         }
         $client->name = $request->input('name');
         $client->email = $request->input('email');
@@ -29,7 +27,7 @@ class ClientController extends Controller
         $client->save();
 
         $cte_app = DB::table('clients_app')->insertGetId([
-            'clients_id' => $id,
+            'clients_id' => $client->id,
             'aplication_id' => $request->input('app_id'),
             'created_at' => date('Y-m-d'),
             'updated_at' => date('Y-m-d'),

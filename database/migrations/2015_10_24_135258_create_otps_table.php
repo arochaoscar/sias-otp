@@ -16,9 +16,11 @@ class CreateOtpsTable extends Migration
             $table->increments('id');
             $table->string('code');
             $table->enum('status', ['D', 'U']);
-            $table->string('ip');
-            $table->integer('clients_app_id')->unsigned();
-            $table->foreign('clients_app_id')->references('id')->on('clients_app');
+            $table->string('ip')->nullable();
+            $table->integer('clients_id')->unsigned();
+            $table->foreign('clients_id')->references('id')->on('clients');
+            $table->integer('aplication_id')->unsigned();
+            $table->foreign('aplication_id')->references('id')->on('aplications');
             $table->timestamps();
         });
     }

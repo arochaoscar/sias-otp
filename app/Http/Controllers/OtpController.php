@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use \App\Aplication;
 use \App\Client;
+use \App\Otp;
 use DB;
 use anlutro\cURL\cURL;
 
@@ -21,27 +22,63 @@ class OtpController extends Controller
             $app = \App\Aplication::where('public_key', $key)->get();
             //return var_dump($app[0]->id);
             if(isset($app[0])){
-                if (filter_var($mail, FILTER_VALIDATE_EMAIL)){
-                    $client = \App\Client::where('email',$mail)->get();
-                    if(isset($client[0])){
-                        $otp = str_random(8);
-                        $curl = new cURL();
-                        $url = 'http://desarrollo.ssas.gob.ve/rest/SMS?telf='.$client[0]->phone;
-                        $url.= '&texto=Hemos eviado una clave de acceso temporal para la aplicación: '.$app[0]->name;
-                        $url.= ' Su clave temporal OTP es: '.$otp;
-                        $url.= '&app_name=ssas';
-                        $curl->get($url);
-                        $encrypt = crypt($otp,$app[0]->private_key);
-                        return array('crypt'=>$encrypt);
-                    }
+                $client = \App\Client::where('email',$mail)->get();
+                if(isset($client[0])){
+
+                    $code = str_random(8);
+                    /* Solicitar envio de SMS */
+                    $curl = new cURL();
+                    $params = array(
+                        'telf' => $client[0]->phone,
+                        'texto' => 'Hemos eviado una clave de acceso temporal para la aplicación: '.$app[0]->name.' Su clave temporal OTP es: '.$code,
+                        'app_name' => 'ssas'
+                    );
+                    $url = $curl->buildUrl('http://desarrollo.ssas.gob.ve/rest/SMS', $params);
+                    $curl->get($url);
+
+                    /* Solicitar envio de Correo */
+                    $email = $client[0]->email;
+                    \Mail::send('otp_mail', ['aplication' => $app[0]->name, 'otp' => $code  ],
+                        function ($message) use ($email) {
+                            $message->from('aplicaciones@gmail.com', 'Aplicaciones SIAS');
+                            $message->to($email);
+                            $message->subject('Clave de Acceso Temporal');
+                        });
+                    /* Encriptamos el otp con clave privada */
+                    $encrypt = crypt($code,$app[0]->private_key);
+
+                    /* Almacenamos OTP */
+                    $otp = new Otp();
+                    $otp->code = $encrypt;
+                    $otp->status = 'D';
+                    $otp->clients_id = $client[0]->id;
+                    $otp->aplication_id = $app[0]->id;
+                    $otp->save();
+
+                    return array('crypt'=>$encrypt);
+                }else{
+                    return response()->json(['error' => 'no cliente' ], 401);
                 }
-                return true;
             }else{
-                return response()->json(['error' => 'unauthorized' ], 401);
+                return response()->json(['error' => 'no app' ], 401);
             }
-
         }else{
+            return response()->json(['error' => 'error mail' ], 401);
+        }
 
+    }
+
+    public function verifyOTP(Request $request,$otp){
+        $key = $request->headers->get('pub-key');
+        $app = \App\Aplication::where('public_key', $key)->get();
+        $encrypt = crypt($otp,$app[0]->private_key);
+        $otp = \App\Otp::where('code',$encrypt)->get();
+
+        if(isset($otp[0])){
+            return array('response'=>true);
+        }else{
+            return array('response'=>false);
         }
     }
+
 }

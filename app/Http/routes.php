@@ -108,3 +108,7 @@ Route::get('api/otp/get/{mail}',[
     'as' => 'api.otp.get',
 ]);
 
+Route::get('api/otp/verify/{otp}',[
+    'uses' => 'OtpController@verifyOTP',
+    'as' => 'api.otp.verify',
+]);
