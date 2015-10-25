@@ -108,17 +108,17 @@ Route::get('api/otp/get/{mail}',[
     'as' => 'api.otp.get',
 ]);
 
-Route::get('api/otp/verify/{otp}',[
+Route::get('api/otp/verify/{code}/{ip}',[
     'uses' => 'OtpController@verifyOTP',
     'as' => 'api.otp.verify',
 ]);
 
-Route::get('api/otp/session/{code}',[
+Route::get('api/otp/session/{code}/{ip}',[
     'uses' => 'OtpController@verifySession',
     'as' => 'api.otp.session',
 ]);
 
-Route::get('api/otp/close/{code}',[
+Route::get('api/otp/close/{code}/{ip}',[
     'uses' => 'OtpController@closeOTP',
     'as' => 'api.otp.close',
 ]);

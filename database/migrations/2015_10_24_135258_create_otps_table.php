@@ -15,7 +15,7 @@ class CreateOtpsTable extends Migration
         Schema::create('otps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code');
-            $table->enum('status', ['D', 'U']);
+            $table->enum('status', ['D', 'U','N']);
             $table->string('ip')->nullable();
             $table->integer('clients_id')->unsigned();
             $table->foreign('clients_id')->references('id')->on('clients');

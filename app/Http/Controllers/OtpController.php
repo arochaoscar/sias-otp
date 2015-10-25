@@ -68,17 +68,21 @@ class OtpController extends Controller
 
     }
 
-    public function verifyOTP(Request $request,$code){
+    public function verifyOTP(Request $request,$code,$ip){
         $key = $request->headers->get('pub-key');
         $app = \App\Aplication::where('public_key', $key)->get();
         if(isset($app[0])){
             $encrypt = crypt($code,$app[0]->private_key);
             $otp = \App\Otp::where('code',$encrypt)->get();
-
             if(isset($otp[0])){
-                $otp[0]->status = 'U';
-                $otp[0]->save();
-                return array('response'=>true);
+                if($otp[0]->status == 'D'){
+                    $otp[0]->status = 'U';
+                    $otp[0]->ip = $ip;
+                    $otp[0]->save();
+                    return array('response'=>true);
+                }else{
+                    return array('response'=>false);
+                }
             }else{
                 return array('response'=>false);
             }
@@ -87,14 +91,14 @@ class OtpController extends Controller
         }
     }
 
-    public function verifySession(Request $request,$code){
+    public function verifySession(Request $request,$code,$ip){
         $key = $request->headers->get('pub-key');
         $app = \App\Aplication::where('public_key', $key)->get();
         if(isset($app[0])){
             $encrypt = crypt($code,$app[0]->private_key);
             $otp = \App\Otp::where('code',$encrypt)->get();
             if(isset($otp[0])){
-                if($otp[0]->status == 'U'){
+                if($otp[0]->status == 'U' AND $otp[0]->ip == $ip){
                     return array('access'=>true);
                 }else{
                     return array('access'=>false);
@@ -107,16 +111,20 @@ class OtpController extends Controller
         }
     }
 
-    public function closeOTP(Request $request,$code){
+    public function closeOTP(Request $request,$code,$ip){
         $key = $request->headers->get('pub-key');
         $app = \App\Aplication::where('public_key', $key)->get();
         if(isset($app[0])){
             $encrypt = crypt($code,$app[0]->private_key);
             $otp = \App\Otp::where('code',$encrypt)->get();
             if(isset($otp[0])){
-                $otp[0]->status = 'N';
-                $otp[0]->save();
-                return array('response'=>true);
+                if($otp[0]->status == 'U' AND $otp[0]->ip == $ip){
+                    $otp[0]->status = 'N';
+                    $otp[0]->save();
+                    return array('response'=>true);
+                }else{
+                    return array('response'=>false);
+                }
             }else{
                 return array('response'=>false);
             }
