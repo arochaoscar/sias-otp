@@ -112,3 +112,13 @@ Route::get('api/otp/verify/{otp}',[
     'uses' => 'OtpController@verifyOTP',
     'as' => 'api.otp.verify',
 ]);
+
+Route::get('api/otp/session/{code}',[
+    'uses' => 'OtpController@verifySession',
+    'as' => 'api.otp.session',
+]);
+
+Route::get('api/otp/close/{code}',[
+    'uses' => 'OtpController@closeOTP',
+    'as' => 'api.otp.close',
+]);

@@ -57,27 +57,71 @@ class OtpController extends Controller
 
                     return array('crypt'=>$encrypt);
                 }else{
-                    return response()->json(['error' => 'no cliente' ], 401);
+                    return response()->json(['error' => 'no autorizado' ], 401);
                 }
             }else{
-                return response()->json(['error' => 'no app' ], 401);
+                return response()->json(['error' => 'no autorizado' ], 401);
             }
         }else{
-            return response()->json(['error' => 'error mail' ], 401);
+            return response()->json(['error' => 'no autorizado' ], 401);
         }
 
     }
 
-    public function verifyOTP(Request $request,$otp){
+    public function verifyOTP(Request $request,$code){
         $key = $request->headers->get('pub-key');
         $app = \App\Aplication::where('public_key', $key)->get();
-        $encrypt = crypt($otp,$app[0]->private_key);
-        $otp = \App\Otp::where('code',$encrypt)->get();
+        if(isset($app[0])){
+            $encrypt = crypt($code,$app[0]->private_key);
+            $otp = \App\Otp::where('code',$encrypt)->get();
 
-        if(isset($otp[0])){
-            return array('response'=>true);
+            if(isset($otp[0])){
+                $otp[0]->status = 'U';
+                $otp[0]->save();
+                return array('response'=>true);
+            }else{
+                return array('response'=>false);
+            }
         }else{
-            return array('response'=>false);
+            return response()->json(['response' => 'no autorizado' ], 401);
+        }
+    }
+
+    public function verifySession(Request $request,$code){
+        $key = $request->headers->get('pub-key');
+        $app = \App\Aplication::where('public_key', $key)->get();
+        if(isset($app[0])){
+            $encrypt = crypt($code,$app[0]->private_key);
+            $otp = \App\Otp::where('code',$encrypt)->get();
+            if(isset($otp[0])){
+                if($otp[0]->status == 'U'){
+                    return array('access'=>true);
+                }else{
+                    return array('access'=>false);
+                }
+            }else{
+                return array('access'=>false);
+            }
+        }else{
+            return response()->json(['response' => 'no autorizado' ], 401);
+        }
+    }
+
+    public function closeOTP(Request $request,$code){
+        $key = $request->headers->get('pub-key');
+        $app = \App\Aplication::where('public_key', $key)->get();
+        if(isset($app[0])){
+            $encrypt = crypt($code,$app[0]->private_key);
+            $otp = \App\Otp::where('code',$encrypt)->get();
+            if(isset($otp[0])){
+                $otp[0]->status = 'N';
+                $otp[0]->save();
+                return array('response'=>true);
+            }else{
+                return array('response'=>false);
+            }
+        }else{
+            return response()->json(['response' => 'no autorizado' ], 401);
         }
     }
 
