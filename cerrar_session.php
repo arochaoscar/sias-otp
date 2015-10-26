@@ -2,7 +2,7 @@
 session_start();
 require_once './ajax/libotp.php';
 $objOTP = new OTP();
-$pubKey = '$2y$10$WE7sWnlZuEx0hqXIYHvXVOFmFf1dEyR1TiXtDQ/7o15TREACxIEQ.';
+$pubKey = '$2y$10$DMjHMXRe975V3WqI5XESke5P44lrsunofQfXVikczPLlAIrpCiTb6';
 $response = json_encode($objOTP->closeOTP($pubKey,$_SESSION['token']),1);
 session_unset();
 session_destroy();

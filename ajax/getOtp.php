@@ -1,7 +1,7 @@
 <?php
 require_once './libotp.php';
 
-$pubKey = '$2y$10$WE7sWnlZuEx0hqXIYHvXVOFmFf1dEyR1TiXtDQ/7o15TREACxIEQ.';
+$pubKey = '$2y$10$DMjHMXRe975V3WqI5XESke5P44lrsunofQfXVikczPLlAIrpCiTb6';
 
 $objOTP = new OTP();
 
