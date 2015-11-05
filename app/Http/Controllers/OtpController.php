@@ -24,8 +24,8 @@ class OtpController extends Controller
             if(isset($app[0])){
                 $client = \App\Client::where('email',$mail)->get();
                 if(isset($client[0])){
-
-                    $code = str_random(8);
+                    $list = ['libertad','patria','soberano','independencia','avanzadora','chavez','cimarron','cacao'];
+                    $code = $list[rand(0,count($list)-1)].rand(100,999);
                     /* Solicitar envio de SMS */
                     $curl = new cURL();
                     $params = array(

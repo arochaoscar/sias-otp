@@ -55,10 +55,13 @@
                         <tbody>
                         @foreach($clients as $client)
                             <tr>
-                                <td>{{ $client->name }}</td>
-                                <td>{{ $client->email }}</td>
-                                <td>{{ $client->phone }}</td>
-                                <td class="text-center">
+                                <td style="width: 30%">{{ $client->name }}</td>
+                                <td style="width: 30%">{{ $client->email }}</td>
+                                <td style="width: 10%">{{ $client->phone }}</td>
+                                <td style="width: 20%" class="text-center">
+                                    <a class="btn btn-sm btn-info" href="{{ route('clients.details',[$client->id]) }}">
+                                        <i class="glyphicon glyphicon-edit"></i> Editar
+                                    </a>
                                     <a class="btn btn-sm btn-danger" href="{{ route('clients.del',[$client->id,$app->id]) }}">
                                         <i class="glyphicon glyphicon-remove"></i> Eliminar
                                     </a>

@@ -38,9 +38,24 @@ class ClientController extends Controller
     }
 
     public function del($client,$app){
-        DB::table('clients_app')->where('clients_id', $client)->where('aplication_id',$app)->delete();
-
+        DB::table('otps')->where('clients_id', $client)->delete();
+        DB::table('clients_app')->where('clients_id', $client)->delete();
+        DB::table('clients')->where('id', $client)->delete();
         return redirect()->route('apps.details',$app);
     }
+
+    public function get($client){
+        $data = \App\Client::find($client);
+        return view('client_details')->with(['client' => $data]);
+    }
+
+    public function edit(Request $request,$id){
+        $client = \App\Client::find($id);
+        $client->name = $request->input('name');
+        $client->email = $request->input('email');
+        $client->save();
+        return redirect()->route('clients.details',$id);
+    }
+
 
 }
