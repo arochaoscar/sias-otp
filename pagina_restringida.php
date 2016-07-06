@@ -3,10 +3,13 @@ session_start();
 require_once './ajax/libotp.php';
 
 $objOTP = new OTP();
-$pubKey = '$2y$10$DMjHMXRe975V3WqI5XESke5P44lrsunofQfXVikczPLlAIrpCiTb6';
+$pubKey = '$2y$10$cj4qVmUIaKFU7mfl0XeTruwQLKF05iJSrrnMqQhNRj8/0kAKNajs6';
 
 
 $response = json_decode($objOTP->verifySesion($pubKey,$_SESSION['token']),1);
+
+
+
 if(!$response['access']){
     header("Location: error_acceso.php");
 }

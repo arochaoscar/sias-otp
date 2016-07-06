@@ -8,7 +8,7 @@ class OTP {
     public function getOTP($pubkey,$mail) {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "http://otp.aplicaciones-sias.com.ve/api/otp/get/".$mail,
+          CURLOPT_URL => "http://www.muronto.gob.ve:9000/api/otp/get/".$mail,
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
@@ -37,7 +37,7 @@ class OTP {
     public function verifyOTP($pubkey, $otp) {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://otp.aplicaciones-sias.com.ve/api/otp/verify/".$otp.'/'.$_SERVER['REMOTE_ADDR'],
+            CURLOPT_URL => "http://www.muronto.gob.ve:9000/api/otp/verify/".$otp.'/'.$_SERVER['REMOTE_ADDR'],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -64,7 +64,7 @@ class OTP {
     public function verifySesion($pubkey,$code) {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://otp.aplicaciones-sias.com.ve/api/otp/session/".$code.'/'.$_SERVER['REMOTE_ADDR'],
+            CURLOPT_URL => "http://www.muronto.gob.ve:9000/api/otp/session/".$code.'/'.$_SERVER['REMOTE_ADDR'],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -91,7 +91,7 @@ class OTP {
     public function closeOTP($pubkey,$code){
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://otp.aplicaciones-sias.com.ve/api/otp/close/".$code.'/'.$_SERVER['REMOTE_ADDR'],
+            CURLOPT_URL => "http://www.muronto.gob.ve:9000/api/otp/close/".$code.'/'.$_SERVER['REMOTE_ADDR'],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
