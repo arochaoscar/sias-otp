@@ -20,13 +20,13 @@
                                 <label>Modificado:</label> {{ $user->updated_at }}
                             </li>
                             <li class="list-group-item text-right">
-                                <a href="#" class="btn btn-sm btn-info">
+                                <a href="#" class="btn btn-sm bg-blue-light">
                                     <i class="glyphicon glyphicon-edit"></i> Editar
                                 </a>
-                                <a href="#" class="btn btn-sm btn-success">
+                                <a href="#" class="btn btn-sm bg-blue">
                                     <i class="glyphicon glyphicon-refresh"></i> Reiniciar Clave
                                 </a>
-                                <a href="#" class="btn btn-sm btn-danger">
+                                <a href="#" class="btn btn-sm bg-black">
                                     <i class="glyphicon glyphicon-lock"></i> Bloquear
                                 </a>
                             </li>

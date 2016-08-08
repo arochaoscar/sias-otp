@@ -21,7 +21,7 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('user.details',$user->id) }}" class="btn btn-sm btn-info">Detalles</a>
+                                    <a href="{{ route('user.details',$user->id) }}" class="btn btn-sm bg-blue-light">Detalles</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -29,7 +29,7 @@
 
                     </table>
                     <div class="panel-body text-right">
-                        <a class="btn btn-sm btn-success" href="#"  id="btn-modal">Agregar Usuario</a>
+                        <a class="btn btn-sm bg-blue" href="#"  id="btn-modal">Agregar Usuario</a>
                     </div>
                 </div>
             </div>
@@ -55,8 +55,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="reset" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Registrar Usuario</button>
+                    <button type="reset" class="btn bg-gray-light" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn bg-blue">Registrar Usuario</button>
                 </div>
             </div>
             {!! Form::close() !!}

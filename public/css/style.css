@@ -1,0 +1,80 @@
+.text-center{
+    text-align: center;
+}
+
+.muronto-back{
+    background-image: url('../img/logo.png');
+    background-size:200px 125px;
+    background-repeat: no-repeat;
+    min-height: 400px;
+    height: 100%;
+}
+
+
+.bg-gray{
+    background-color: #8598a8 !important;
+}
+
+.bg-gray-light{
+    background-color: #c2d4ec !important;
+    color: #333;
+}
+
+.bg-blue{
+    background-color: #0753b3 !important;
+    color: #FFF;
+}
+
+.bg-blue-light{
+    background-color: #019cde !important;
+    color: #FFF;
+}
+
+.bg-cyan{
+    background-color: #01ffff !important;
+    color: #FFF;
+}
+
+.bg-white{
+    background-color: #FFF !important;
+    color: #333;
+}
+
+.bg-black{
+    background-color: #000 !important;
+    color: #FFF;
+}
+
+.text-gray{
+    color: #8598a8 !important;
+}
+
+.text-gray-light{
+    color: #c2d4ec !important;
+}
+
+.text-blue{
+    color: #0753b3 !important;
+}
+
+.text-blue-light{
+    color: #019cde !important;
+}
+
+.text-cyan{
+    color: #01ffff !important;
+}
+
+.text-white{
+    color: #FFF !important;
+}
+
+.text-black{
+    color: #000 !important;
+}
+
+.content{
+    max-width: 80%;
+    margin-left: 200px;
+    height: 100%;
+}
