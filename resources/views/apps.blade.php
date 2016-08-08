@@ -21,9 +21,14 @@
                                 <td>{{ $app->name }}</td>
                                 <td>{{ $app->uri }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-sm btn-info" href="{{ route('apps.details',$app->id) }}">
+                                    <a class="btn btn-sm bg-blue-light" href="{{ route('apps.details',$app->id) }}">
                                         <i class="glyphicon glyphicon-th-list"></i> Detalles
                                     </a>
+                                    @if(\Auth::user()->role ==  "owner")
+                                    <a class="btn btn-sm bg-black btn-delete" href="{{ route('apps.delete',$app->id) }}">
+                                        <i class="glyphicon glyphicon-remove-circle"></i> Eliminar
+                                    </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -31,7 +36,7 @@
                     </table>
                     @if(\Auth::user()->role ==  "owner")
                         <div class="panel-body text-right">
-                            <a class="btn btn-sm btn-success" href="#"  id="btn-modal">Agregar Aplicación</a>
+                            <a class="btn btn-sm bg-blue" href="#"  id="btn-modal">Agregar Aplicación</a>
                         </div>
                     @endif
                 </div>
@@ -58,11 +63,26 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="reset" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Registrar App</button>
+                    <button type="reset" class="btn bg-gray-light" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn bg-blue">Registrar App</button>
                 </div>
             </div>
             {!! Form::close() !!}
+        </div>
+    </div>
+    <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                {!! Form::open(['route' => ['apps.delete','END'],'method' => 'DELETE','id' => 'form-delete' ]) !!}
+                <div class="modal-body">
+                    <div class="alert alert-info">Confirma Eliminar Aplicación</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn bg-gray-light" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn bg-blue">Eliminar App</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
         </div>
     </div>
     @endif
@@ -76,6 +96,19 @@
                 e.preventDefault();
                 $('#modal').modal('show');
             });
+
+            var btnDelete = $('.btn-delete');
+            var modalDelete = $('#modal-delete');
+            var formDelete = $('#form-delete');
+
+            btnDelete.click(function(e){
+                e.preventDefault();
+                var url = $(this).attr('href');
+                modalDelete.modal('show');
+                formDelete.attr('action',url);
+            });
+
+
         });
     </script>
 

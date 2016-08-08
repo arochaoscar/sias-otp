@@ -26,12 +26,12 @@
                                 <label>Modificado:</label> {{ $app->updated_at }}
                             </li>
                             <li class="list-group-item text-right">
-                                <a href="#" class="btn btn-sm btn-info" id="editApp">
+                                <a href="#" class="btn btn-sm bg-blue-light" id="editApp">
                                     <i class="glyphicon glyphicon-edit"></i> Editar
                                 </a>
-                                <!--<a href="#" class="btn btn-sm btn-danger">
-                                    <i class="glyphicon glyphicon-remove-circle"></i> Eliminar
-                                </a>-->
+                                <button class="btn btn-sm bg-black" id="btn-elm">
+                                    <i class="glyphicon glyphicon-remove"></i> Eliminar
+                                </button>
                             </li>
                         </ul>
                     </div>
@@ -59,10 +59,10 @@
                                 <td style="width: 30%">{{ $client->email }}</td>
                                 <td style="width: 10%">{{ $client->phone }}</td>
                                 <td style="width: 20%" class="text-center">
-                                    <a class="btn btn-sm btn-info" href="{{ route('clients.details',[$client->id]) }}">
+                                    <a class="btn btn-sm bg-blue" href="{{ route('clients.details',[$client->id]) }}">
                                         <i class="glyphicon glyphicon-edit"></i> Editar
                                     </a>
-                                    <a class="btn btn-sm btn-danger" href="{{ route('clients.del',[$client->id,$app->id]) }}">
+                                    <a class="btn btn-sm bg-black" href="{{ route('clients.del',[$client->id,$app->id]) }}">
                                         <i class="glyphicon glyphicon-remove"></i> Eliminar
                                     </a>
                                 </td>
@@ -71,7 +71,7 @@
                         </tbody>
                     </table>
                     <div class="panel-body text-right">
-                        <a class="btn btn-sm btn-success" href="#"  id="btn-modal">
+                        <a class="btn btn-sm bg-blue" href="#"  id="btn-modal">
                             <i class="glyphicon glyphicon-user"></i> Agregar Usuario
                         </a>
                     </div>
@@ -108,8 +108,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="reset" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Registrar Usuario</button>
+                    <button type="reset" class="btn bg-gray-light" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn bg-blue">Registrar Usuario</button>
                 </div>
                 <input type="hidden" name="user_id" id="user_id" value=""/>
                 <input type="hidden" name="app_id" id="app_id" value="{{ $app->id }}"/>
@@ -137,14 +137,32 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="reset" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Actualizar App</button>
+                    <button type="reset" class="btn bg-gray-light" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn bg-blue">Actualizar App</button>
                 </div>
                 <input type="hidden" name="id" value="{{ $app->id }}">
             </div>
             {!! Form::close() !!}
         </div>
     </div>
+
+    @if(\Auth::user()->role ==  "owner")
+        <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    {!! Form::open(['route' => ['apps.delete',$app->id],'method' => 'DELETE','id' => 'form-delete' ]) !!}
+                    <div class="modal-body">
+                        <div class="alert alert-info">Confirma Eliminar Aplicación</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn bg-gray-light" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn bg-blue">Eliminar App</button>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    @endif
 
 @endsection
 
@@ -206,6 +224,12 @@
                 phone.val($(this).data('phone'));
                 listName.children().remove();
             });
+
+            $('#btn-elm').click(function(){
+              $('#modal-delete').modal('show');
+            });
+
+
         });
     </script>
 

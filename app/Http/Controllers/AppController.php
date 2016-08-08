@@ -91,4 +91,16 @@ class AppController extends Controller
         return redirect()->route('apps.details',$app->id);
     }
 
+    public function destroy($id){
+
+
+
+        $app = \App\Aplication::findOrFail($id);
+        DB::table('clients_app')->where('aplication_id',$id)->delete();
+        $app->delete();
+
+        return redirect()->route('apps');
+
+    }
+
 }

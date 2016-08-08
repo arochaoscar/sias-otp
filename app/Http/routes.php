@@ -85,6 +85,11 @@ Route::post('apps/edit',[
     'as' => 'apps.edit',
 ]);
 
+Route::delete('apps/destroy/{id}',[
+    'uses' => 'AppController@destroy',
+    'as' => 'apps.delete',
+]);
+
 //* Clientes *//
 Route::get('clients/search/{id}',[
     'uses' => 'ClientController@search',
